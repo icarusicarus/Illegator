@@ -1,2 +1,5 @@
 chromedriver.exe
 README.md
+*.log
+*.png
+phantomjs
