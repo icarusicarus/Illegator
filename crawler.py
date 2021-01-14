@@ -8,19 +8,14 @@ from konlpy.tag import Okt
 okt = Okt()
 
 driver = webdriver.Chrome(executable_path="chromedriver.exe")
-f = open("List.txt",'a')
 #url = "https://yadong2.2on.in/" #야동모아 라는 사이트
 url = "http://xnuna.me/" 
 DELAY = 1
 #driver.get(url)
-id_num = 287
+id_num = 1
 i = 1
 IsNoPage = 0
 
-#WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@id="obody"]')))
-#WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@title="BJ야동 벗방BJ"]')))
-#driver.find_element_by_xpath('//a[@title="BJ야동 벗방BJ"]').click()
-#https://yadong2.2on.in/bbs/korea_adult-4866?_ga=2.37806883.1845456195.1610204286-994226898.1610204286      어덜트뒤의 수를 조정하여 게시물을 바꿀수있음.
 url_ = "http://xnuna.me/bbs/board.php?bo_table=ya_kor&wr_id="
 #WebDriverWait(driver, DELAY).until(EC.presence_of_element_located((By.XPATH,'//ul[@id="gnb_1dul"]')))
 #print(driver.find_element_by_xpath('//ul[@id="gnb_1dul"]/child::li[2]').text)
