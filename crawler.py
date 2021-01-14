@@ -16,6 +16,7 @@ id_num = 1
 i = 1
 IsNoPage = 0
 
+
 url_ = "http://xnuna.me/bbs/board.php?bo_table=ya_kor&wr_id="
 #WebDriverWait(driver, DELAY).until(EC.presence_of_element_located((By.XPATH,'//ul[@id="gnb_1dul"]')))
 #print(driver.find_element_by_xpath('//ul[@id="gnb_1dul"]/child::li[2]').text)
