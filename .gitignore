@@ -4,3 +4,4 @@ README.md
 *.png
 phantomjs
 screenshot
+.vscode
