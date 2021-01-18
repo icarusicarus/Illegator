@@ -17,10 +17,28 @@ class url_struct:
 
 url_list = []
 crawled_list = []
+keywords = []
+hit_lists = []
+hit_score = []
 
 internal_depth = 3
 external_depth = 5
 
+# compare Keywords with texts of html, return matching(hit) list and the number of matched ones(score)
+def get_hit_list(keywords, _text):
+    hit_list = {}
+    score = 0
+    for keyword in keywords:
+        keyword_count = _text.count(keyword)
+        if keyword_count > 0:
+            hit_list.update({keyword: keyword_count})
+            score += keyword_count
+    return [hit_list, score]
+
+
+# sort by score with [list, [list, list]], the last list contains scores
+def sort_by_sum(e):
+    return e[1][1]
 
 def execute_command(command):
     result = Popen(command, shell=True, stdout=PIPE).stdout.read()
@@ -53,6 +71,10 @@ def crawler():
             print("[O] Crawling " + struct.url + "...")
             html = driver.page_source
             soup = BeautifulSoup(html, "html.parser")
+            text = soup.text
+            list_total_score = get_hit_list(gamble_keywords, text)
+            hit_lists.append(list_total_score[0])
+            hit_score.append(list_total_score[1])
 
             net = parse.urlparse(struct.url).netloc
 
@@ -89,7 +111,15 @@ def crawler():
                             pass
                     else:
                         pass
+                      
+            # Print result of keyword matching
+            result = list(zip(url_list, zip(hit_lists, hit_score)))
+            result.sort(reverse=True, key=sort_by_sum)
 
+            for r in result:
+                print("총계: " + str(r[1][1]) + '\t', r[0], r[1][0])
+            
+            # Take a screenshot
             driver.save_screenshot("./screenshot/" + net + time.strftime("%H%M%S") + ".png")
             # If you wanna cropped image,
             # crop_image(net)
