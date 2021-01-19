@@ -5,15 +5,26 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from konlpy.utils import pprint
 from konlpy.tag import Okt
-okt = Okt()
+from bs4 import BeautifulSoup
 
-driver = webdriver.Chrome(executable_path="chromedriver.exe")
+okt = Okt()
+# 옵션 생성
+# 옵션 생성
+options = webdriver.ChromeOptions()
+# 창 숨기는 옵션 추가
+options.add_argument("headless")
+options.add_argument('--disable-gpu')
+options.add_argument("--log-level=3")
+driver = webdriver.Chrome(executable_path="chromedriver.exe",options=options)
+# 창 숨기는 옵션 추가
+options.add_argument("headless")
+driver = webdriver.Chrome(executable_path="chromedriver.exe",options=options)
 f = open("List.txt",'a')
 #url = "https://yadong2.2on.in/" #야동모아 라는 사이트
 url = "http://xnuna.me/" 
 DELAY = 1
 #driver.get(url)
-id_num = 287
+id_num = 1
 i = 1
 IsNoPage = 0
 
@@ -53,15 +64,23 @@ while(True):
         pass
     except:
         pass
-    WebDriverWait(driver, DELAY).until(EC.presence_of_element_located((By.XPATH, '//span[@class="bo_v_tit"]')))
-    title = driver.find_element_by_xpath('//span[@class="bo_v_tit"]').text
-    crawling_text += str(id_num) + " | "
+    WebDriverWait(driver, DELAY).until(EC.presence_of_element_located((By.XPATH, '//i[contains(@class, "fa-clock")]')))
+    #full_html = driver.page_source
+    html = driver.page_source
+    # soup에 넣어주기
+    soup = BeautifulSoup(html, 'html.parser')
+    date = str(driver.find_element_by_xpath('//i[contains(@class, "fa-clock")]/parent::node ()').text)
+    title = soup.select_one('title').get_text()
+    crawling_text += str(id_num) + ";"
     crawling_text += title
-    crawling_text += " | "
-    crawling_text += str(okt.nouns(title)) + " | "
-    print(str(id_num) + " | " + str(driver.find_element_by_xpath('//strong[@class="if_date"]').text))
-    crawling_text += str(driver.find_element_by_xpath('//strong[@class="if_date"]').text) + "\n"
+    crawling_text += ";"
+    crawling_text += str(okt.nouns(title)) + ";"
+    print(str(id_num) + " ; " + date)
+    crawling_text += date + "\n"
     f.write(crawling_text)
     id_num += 1
     IsNoPage = 0
     f.close()
+
+    
+#다양한 웹사이트에 적용할수있도록 수정 , 크롤링하는게 안보이도록 수정하면좋음, 모듈화
