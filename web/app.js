@@ -9,6 +9,8 @@ var expressSession = require("express-session");
 var mysql = require("mysql");
 var app = express();
 
+const { sequelize } = require('./models');
+
 app.set("port", process.env.PORT || 3000);
 app.set("views", "./views");
 app.set("view engine", "ejs");
@@ -24,15 +26,26 @@ app.use(
   })
 );
 
+sequelize.sync({ force: false })
+  .then(() => {
+    console.log("[Success] Database Connect");
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
 var mainRouter = require("./routes/main");
 var loginRouter = require("./routes/login");
+var registerRouter = require("./routes/register");
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/", loginRouter);
+app.use("/register", registerRouter);
 
 app.use(function (req, res, next) {
   res.status(400).send("Not Found");

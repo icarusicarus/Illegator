@@ -2,9 +2,9 @@
   "name": "web",
   "version": "1.0.0",
   "description": "web solution fo illegator",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon index",
+    "start": "nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "icarus",
@@ -18,7 +18,10 @@
     "html": "^1.0.0",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
     "nodemon": "^2.0.7",
+    "sequelize": "^6.4.0",
+    "sequelize-cli": "^6.2.0",
     "vis-network": "^9.0.0"
   }
 }
