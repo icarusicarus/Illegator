@@ -36,6 +36,7 @@ sequelize.sync({ force: false })
 
 var mainRouter = require("./routes/main");
 var loginRouter = require("./routes/login");
+var logoutRouter = require("./routes/logout");
 var registerRouter = require("./routes/register");
 
 app.use(logger("dev"));
@@ -45,6 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/", loginRouter);
+app.use("/logout", logoutRouter);
 app.use("/register", registerRouter);
 
 app.use(function (req, res, next) {

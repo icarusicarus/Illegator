@@ -41,9 +41,9 @@ router.route('/')
                             username: id,
                             password: hashPw
                         }
-                    });
-                    if (login) {
-
+                    }, { raw: true });
+                    var logged = login[0].username;
+                    if (logged) {
                         req.session.loggedin = true;
                         req.session.uid = id;
                         res.redirect("/");
