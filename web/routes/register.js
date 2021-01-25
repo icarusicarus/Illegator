@@ -19,8 +19,12 @@ var loginPage = function (req, res, alert) {
 
 router.route('/')
     .get(async (req, res, next) => {
-        console.log('[Ragister GET] Register page loading...');
-        registerPage(req, res);
+        if (req.session.loggedin) {
+            res.render('main');
+        } else {
+            console.log('[Ragister GET] Register page loading...');
+            registerPage(req, res);
+        }
     })
     .post(async (req, res, next) => {
         try {
@@ -40,10 +44,9 @@ router.route('/')
                 password: hashPw,
                 salt: salt,
                 email: email,
-                permission: 1,
+                permission: 0,
             });
 
-            console.log(addUser);
             console.log("Success to INSERT new user");
             loginPage(req, res, "Register success. Try login!");
         } catch (err) {

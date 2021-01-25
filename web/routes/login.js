@@ -19,9 +19,7 @@ router.route('/')
             loginPage(req, res);
         } else {
             console.log("[Login GET] Already loggedin. Go to main page.");
-            res.render("main.ejs", {
-                uid: uid,
-            });
+            res.redirect("main");
         }
     })
     .post(async (req, res, next) => {
