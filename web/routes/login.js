@@ -5,7 +5,7 @@ const router = express.Router();
 const User = require("../models/user")
 
 var loginPage = function (req, res, alert) {
-    res.render("login.ejs", {
+    res.render("login.html", {
         msg: alert,
     });
 };

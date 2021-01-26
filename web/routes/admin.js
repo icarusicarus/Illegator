@@ -23,10 +23,15 @@ router.route('/')
 
         res.render('admin.ejs', { 'userList': jsonData });
     })
+
+router.route('/permit')
     .post(async (req, res, next) => {
-        //
+        await User.update({ permission: 1 }, {
+            where: {
+                username: req.body.username,
+                email: req.body.email
+            }
+        });
     })
 
 module.exports = router;
-
-// get 에서 데이터 받아서 뿌려줘야하는데 데이터를 어떻게 받아올지 몰라서 찾아보는 중임

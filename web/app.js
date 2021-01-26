@@ -13,7 +13,8 @@ const { sequelize } = require('./models');
 
 app.set("port", process.env.PORT || 3000);
 app.set("views", "./views");
-app.set("view engine", "ejs");
+app.engine('html', require('ejs').renderFile);
+app.set("view engine", "html");
 
 app.use(
   expressSession({
