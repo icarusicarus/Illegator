@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ILLEGATOR WEB</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href='./style.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js" type="text/javascript"></script>
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar fixed-top border-bottom" style="background-color: #ffffff; border-color: #eeeeee;">
+        <div class="col-md-3">
+            <a class="navbar-brand" href="#" style="color: #b1b1b1;">🐊 Illegator</a>
+        </div>
+        <div class="col-md-9">
+            <a class="navbar-brand" href="#" style="color:black;">Admin</a>
+        </div>
+
+    </nav>
+
+    <div class="container-fluid min-vh-100 row justify-content-center align-items-center"
+        style="background-color: #eeeeee;">
+        <div id="login-column" class="col-md-6 border"
+            style="background-color: #ffffff; padding: 20px; border-color: #6c757d;">
+            <div id="admin-box" class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>username</th>
+                            <th>email</th>
+                            <th>permit</th>
+                            <th>권한</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i=0; i < userList.length; i++){ %>
+                            <tr>
+                                <form action="/admin/permit" method="post">
+                                    <td>
+                                        <p>
+                                            <%= userList[i]['username'] %>
+                                        </p>
+                                    </td>
+                                    <input type="hidden" value="<%- userList[i]['username'] %>" name="username"
+                                        id="something" />
+                                    <td>
+                                        <p>
+                                            <%= userList[i]['email'] %>
+                                        </p>
+                                    </td>
+                                    <input type="hidden" value="<%- userList[i]['email'] %>" name="email"
+                                        id="something" />
+                                    <td>
+                                        <p>
+                                            <%= userList[i]['permission'] %>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <input type="submit" name="permit" value="승인" class="btn btn-info btn-md" />
+                                    </td>
+                                </form>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>

@@ -2,7 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const crypto = require("crypto");
 const router = express.Router();
-const User = require("../models/user")
+const { User } = require('../models');
 
 var loginPage = function (req, res, alert) {
     res.render("login.html", {
@@ -12,9 +12,8 @@ var loginPage = function (req, res, alert) {
 
 router.route('/')
     .get(async (req, res, next) => {
-        var uid = req.session.uid;
-        console.log(uid);
-        if (uid == undefined) {
+        console.log(req.session.loggedin);
+        if (req.session.loggedin == undefined) {
             console.log("[Login GET] Login page loading...");
             loginPage(req, res);
         } else {
@@ -34,17 +33,24 @@ router.route('/')
                 loginPage(req, res, "No such user! You need to register.");
             } else {
                 try {
-                    const login = await User.findAll({
+                    const login = await User.findOne({
                         where: {
                             username: id,
                             password: hashPw
                         }
                     }, { raw: true });
-                    var logged = login[0].username;
+
+                    var logged = login.username;
                     if (logged) {
-                        req.session.loggedin = true;
-                        req.session.uid = id;
-                        res.redirect("/");
+                        if (login.permission == 0) {
+                            res.render('login', { msg: "permission denied" });
+                            console.log("Permisson Denied");
+                        } else {
+                            req.session.loggedin = true;
+                            req.session.uid = id;
+                            res.redirect('/main');
+                            console.log("Permisson OK!");
+                        }
                     }
                 } catch (err) {
                     console.error(err);

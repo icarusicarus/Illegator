@@ -4,24 +4,23 @@ const router = express.Router();
 
 router.route('/')
     .get(async (req, res, next) => {
-        console.log("[Admmin GET] Admin page loading...");
 
-        var userList = new Array();
+        if (req.session.uid == 'admin') {
+            console.log("[Admmin GET] Admin page loading...");
+            var userList = new Array();
 
-        const user = await User.findAll({
-            attributes: ['username', 'email', 'permission'],
-            where: {
-                permission: 0
-            }
-        }, { raw: true });
+            const user = await User.findAll({
+                attributes: ['username', 'email', 'permission'],
+                where: {
+                    permission: 0
+                }
+            }, { raw: true });
 
-        for (var i = 0; i < user.length; i++) {
-            userList.push(user[i].dataValues);
+            res.render('admin.html', { 'userList': user });
+        } else {
+            console.log("[WARNING] You are not ADMIN");
+            res.redirect("main");
         }
-
-        var jsonData = JSON.stringify(userList);
-
-        res.render('admin.ejs', { 'userList': jsonData });
     })
 
 router.route('/permit')
@@ -32,6 +31,7 @@ router.route('/permit')
                 email: req.body.email
             }
         });
+        res.redirect('/admin');
     })
 
 module.exports = router;

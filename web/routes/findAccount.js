@@ -70,7 +70,7 @@ router.route('/findPw')                         // send email and update databas
                 secure: false,
                 auth: {
                     user: '0flame0dawn0@gmail.com',
-                    pass: 'filterd',
+                    pass: '1CaRuS09!!',
                 },
             });
 
