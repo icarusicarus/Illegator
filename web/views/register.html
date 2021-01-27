@@ -1,37 +1,89 @@
 <!DOCTYPE html>
-<html>
 
-<head>Test Register page</head>
-
+<html lang="en">
+<head>
+  <title>ILLEGATOR WEB</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href='./style.css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js" type="text/javascript"></script>
+</style>
+</head>
 <body>
-    <form action="/register" method="post">
-        <div>
-            <label>ID: </label>
-            <input type="text" id="id" name="id">
+
+    <nav class="navbar fixed-top border-bottom" style="background-color: #ffffff; border-color: #eeeeee;">
+        <div class="col-md-3">
+            <a class="navbar-brand" href="#" style="color: #b1b1b1;">🐊 Illegator</a>
+        </div>
+        <div class="col-md-9">
+            <a class="navbar-brand" href="#" style="color:black;">Register</a>
         </div>
 
-        <div>
-            <label>PW: </label>
-            <input type="text" id="pw" name="pw">
+    </nav>
+    
+    <div class="container-fluid min-vh-100 row justify-content-center align-items-center" style="background-color: #eeeeee;">
+        <div id="register-column" class="col-md-4 border" style="background-color: #ffffff; padding: 20px; border-color: #6c757d;">
+            <div id="register-box" class="col-md-12">
+                <form id="register-form" class="form" action="" method="post">
+                    <div class="form-group">
+                      <label for="registerIdInput">ID</label>
+                      <input v-model="id" :required="!id" type="id" class="form-control" id="registerIdInput" name='id' placeholder="아이디" >
+                      
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPwInput">Password</label>
+                        <input v-model="password" :required="!password" type="pw" class="form-control" id="registerPwInput" name='pw' placeholder="비밀번호" >
+                        <span v-if="lengthValidation() === false && password.length !== 0 " class="text-danger">*비밀번호는 8글자 이상 20글자 이하여야합니다.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPwCheckInput">Password Check</label>
+                        <input v-model="passwordCheck" :required="!passwordCheck" type="pw" class="form-control" id="registerPwCheckInput2" placeholder="비밀번호 확인" >
+                        <span v-if="correctValidation() === false && passwordCheck.length > 0" class="text-danger">*입력한 비밀번호와 다릅니다.</span>
+                        <span v-else-if="correctValidation() && passwordCheck.length > 0" class="text-success">*입력한 비밀번호와 동일합니다.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmailInput">Email address</label>
+                        <input v-model="email" :required="!email" type="email" class="form-control" id="registerEmailInput" name='email' placeholder="이메일" >
+                    </div>
+                    <div class="container-login-submit form-group d-flex align-items-end flex-column">
+                        <input :disabled="!lengthValidation() || !correctValidation()" type="submit" name="submit" class="btn btn-info btn-md" value="가입">
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <div>
-            <label>Email: </label>
-            <input type="text" id="email" name="email">
-        </div>
+    </div>
+        
+   
 
-        <div class="button">
-            <button type="submit">Submit</button>
-        </div>
-    </form>
-    <form action="/register/idcheck" method="post">
-        <div>
-            <input type="text" id="id" name="id">
-        </div>
-        <div>
-            <button type="submit">ID Dup check</button>
-        </div>
-    </form>
 </body>
-
 </html>
+
+<script>
+    var pwCheck = new Vue({
+        el: '#register-box',
+        data:{
+            id: '',
+            password: '',
+            passwordCheck: '',
+            email:'',
+            
+        },
+        methods:{
+            lengthValidation: function(){
+                return this.password.length >= 8 && this.password.length <= 20;
+            },
+            correctValidation: function(){
+                return this.password === this.passwordCheck;
+            }
+
+        },
+    })
+
+</script>
+

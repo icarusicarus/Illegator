@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs");
+const url = require('url');
 const crypto = require("crypto");
 const router = express.Router();
 const User = require("../models/user")
@@ -19,7 +20,7 @@ router.route('/')
             loginPage(req, res);
         } else {
             console.log("[Login GET] Already loggedin. Go to main page.");
-            res.redirect("main");
+            res.render('main',{uid:uid})
         }
     })
     .post(async (req, res, next) => {
@@ -40,6 +41,7 @@ router.route('/')
                             password: hashPw
                         }
                     }, { raw: true });
+                    console.log(login);
                     var logged = login[0].username;
                     if (logged) {
                         req.session.loggedin = true;
@@ -53,7 +55,6 @@ router.route('/')
             }
         }
     })
-
 
 async function getHashPW(username, pw, callback) {
     const result = await User.findAll({
