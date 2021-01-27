@@ -1,11 +1,9 @@
 var express = require('express');
-var fs = require('fs');
 const crypto = require("crypto");
 const { User } = require('../models');
 var router = express.Router();
-var path = require('path');
 
-/*
+
 var registerPage = function (req, res, alert) {
     res.render('register.html', {
         msg: alert
@@ -17,22 +15,15 @@ var loginPage = function (req, res, alert) {
         msg: alert
     })
 }
-*/
-
-var registerPage = function (req, res, alert) {
-    res.sendFile(path.resolve('./views/register.html'));
-    
-}
-
-var loginPage = function (req, res, alert) {
-    res.sendFile(path.resolve('./views/login.html'));
-};
-
 
 router.route('/')
     .get(async (req, res, next) => {
-        console.log('[Ragister GET] Register page loading...');
-        registerPage(req, res);
+        if (req.session.loggedin) {
+            res.render('main');
+        } else {
+            console.log('[Ragister GET] Register page loading...');
+            registerPage(req, res);
+        }
     })
     .post(async (req, res, next) => {
         try {
@@ -55,7 +46,6 @@ router.route('/')
                 permission: 0,
             });
 
-            console.log(addUser);
             console.log("Success to INSERT new user");
             loginPage(req, res, "Register success. Try login!");
         } catch (err) {
@@ -83,4 +73,3 @@ router.route('/idcheck')
     })
 
 module.exports = router;
-
