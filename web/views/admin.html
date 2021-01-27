@@ -34,30 +34,44 @@
             <div id="admin-box" class="col-md-12">
                 <table class="table table-striped">
                     <thead>
-                      <tr>
-                        <th>username</th>
-                        <th>email</th>
-                        <th>permit</th>
-                        <th>권한</th>
-                      </tr>
+                        <tr>
+                            <th>username</th>
+                            <th>email</th>
+                            <th>permit</th>
+                            <th>권한</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <% for (var i =0; i < userList.length; i++){ %>
+                        <% for (var i=0; i < userList.length; i++){ %>
                             <tr>
-                               <form action="/admin/permit" method="post">
-                                 <td><p><%= userList[i]['username'] %></p></td>
-                                 <input type="hidden" value="<%- userList[i]['username'] %>" name="username" id="something" />
-                                 <td><p ><%= userList[i]['email'] %></p></td>
-                                 <input type="hidden" value="<%- userList[i]['email'] %>" name="email" id="something" />
-                                 <td><p><%= userList[i]['permission'] %></p></td>
-                                 <td>
-                                    <input type="submit" name="permit" value="승인" class="btn btn-info btn-md"/>
-                                </td>
-                              </form>
+                                <form action="/admin/permit" method="post">
+                                    <td>
+                                        <p>
+                                            <%= userList[i]['username'] %>
+                                        </p>
+                                    </td>
+                                    <input type="hidden" value="<%- userList[i]['username'] %>" name="username"
+                                        id="something" />
+                                    <td>
+                                        <p>
+                                            <%= userList[i]['email'] %>
+                                        </p>
+                                    </td>
+                                    <input type="hidden" value="<%- userList[i]['email'] %>" name="email"
+                                        id="something" />
+                                    <td>
+                                        <p>
+                                            <%= userList[i]['permission'] %>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <input type="submit" name="permit" value="승인" class="btn btn-info btn-md" />
+                                    </td>
+                                </form>
                             </tr>
-                        <% } %>
+                            <% } %>
                     </tbody>
-                  </table>
+                </table>
             </div>
         </div>
 
@@ -66,4 +80,5 @@
 
 
 </body>
+
 </html>

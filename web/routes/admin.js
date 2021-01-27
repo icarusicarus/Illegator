@@ -4,23 +4,23 @@ const router = express.Router();
 
 router.route('/')
     .get(async (req, res, next) => {
-        console.log("[Admmin GET] Admin page loading...");
 
-        var userList = new Array();
+        if (req.session.uid == 'admin') {
+            console.log("[Admmin GET] Admin page loading...");
+            var userList = new Array();
 
-        const user = await User.findAll({
-            attributes: ['username', 'email', 'permission'],
-            where: {
-                permission: false
-            }
-        }, { raw: true });
+            const user = await User.findAll({
+                attributes: ['username', 'email', 'permission'],
+                where: {
+                    permission: 0
+                }
+            }, { raw: true });
 
-        // for (var i = 0; i < user.length; i++) {
-        //     userList.push(user[i].dataValues);
-        // }
-
-        // var jsonData = JSON.stringify(userList);
-        res.render('admin.html', { 'userList': user });
+            res.render('admin.html', { 'userList': user });
+        } else {
+            console.log("[WARNING] You are not ADMIN");
+            res.redirect("main");
+        }
     })
 
 router.route('/permit')

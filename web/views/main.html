@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js" type="text/javascript"></script>
     <style type="text/css">
         #mynetwork {
@@ -31,7 +31,9 @@
             <a class="navbar-brand" href="/" style="color:black;">Home</a>
         </div>
         <div class="col-md-1">
-            <a class="navbar-user" id="nav-user-name" href="/" style="color:black;"> <%= uid %> 님 </a>
+            <a class="navbar-user" id="nav-user-name" href="/" style="color:black;">
+                <%= uid %> 님
+            </a>
         </div>
         <script>
             console.log("hihihihihihi");
@@ -60,7 +62,8 @@
                     </span>
                 </div>
                 <nav class="nav my-3 flex-column">
-                    <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#drop_btn_1">버튼▼</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="collapse"
+                        data-target="#drop_btn_1">버튼▼</button>
                     <div class="collapse_container collapse" id="drop_btn_1">
                         <a class="nav-link pt-3" href="#" style="color: black;">미정 링크1</a>
                         <a class="nav-link pt-3" href="#" style="color: black;">미정 링크2</a>
@@ -107,13 +110,14 @@
 
 <script>
 </script>
+
 </html>
 
 
 <script>
-console.log(document.querySelector("#nav-user-name").DataSet);
-console.log("hi");
-var mainVue = new Vue({
-    el: '#nav-user-name',
-})
+    console.log(document.querySelector("#nav-user-name").DataSet);
+    console.log("hi");
+    var mainVue = new Vue({
+        el: '#nav-user-name',
+    })
 </script>
