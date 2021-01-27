@@ -28,8 +28,8 @@ router.route('/')
         const pw = req.body.password;
 
         if (id && pw) {
-            const hashPW = await getHashPW(id, pw);
-            if (!hashPw) {
+            const hashPw = await getHashPW(id, pw);
+            if (hashPw == null) {
                 console.log("Login fail, redirect login page");
                 loginPage(req, res, "No such user! You need to register.");
             } else {
@@ -63,21 +63,32 @@ router.route('/')
     })
 
 async function getHashPW(username, pw, callback) {
-    const result = await User.findAll({
-        attributes: ['salt'],
+    const exist = await User.findOne({
         where: { username: username }
     }, { raw: true });
 
-    var salt = result[0].salt;
-    var hashPW;
-    if (salt) {
-        hashPw = crypto
-            .pbkdf2Sync(pw, salt, 100, 64, "sha512")
-            .toString("base64");
+    if (exist != null) {
+        const result = await User.findAll({
+            attributes: ['salt'],
+            where: { username: username }
+        }, { raw: true });
+
+        var salt = result[0].salt;
+        var hashPW;
+        if (salt) {
+            hashPw = crypto
+                .pbkdf2Sync(pw, salt, 100, 64, "sha512")
+                .toString("base64");
+        } else {
+            console.log("[Error] getHashPW: Can't find correspond ID.");
+            return 0;
+        }
     } else {
-        console.log("[Error] getHashPW: Can't find correspond ID.");
-        return 0;
+        var hashPW = null;
+        console.log("No such user! You need to register.");
+        return hashPW;
     }
+
     return hashPw;
 }
 
