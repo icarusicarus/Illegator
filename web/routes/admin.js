@@ -25,10 +25,11 @@ router.route('/')
 
 router.route('/permit')
     .post(async (req, res, next) => {
+        console.log(req.body);
         await User.update({ permission: 1 }, {
             where: {
-                username: req.body.username,
-                email: req.body.email
+                username: req.body['username'],
+                email: req.body['email']
             }
         });
         res.redirect('/admin');

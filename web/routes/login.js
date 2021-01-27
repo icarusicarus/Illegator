@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs");
+const url = require('url');
 const crypto = require("crypto");
 const router = express.Router();
 const { User } = require('../models');
@@ -18,7 +19,7 @@ router.route('/')
             loginPage(req, res);
         } else {
             console.log("[Login GET] Already loggedin. Go to main page.");
-            res.redirect("main");
+            res.render('main', { uid: uid })
         }
     })
     .post(async (req, res, next) => {
@@ -41,6 +42,7 @@ router.route('/')
                     }, { raw: true });
 
                     var logged = login.username;
+
                     if (logged) {
                         if (login.permission == 0) {
                             res.render('login', { msg: "permission denied" });
@@ -59,7 +61,6 @@ router.route('/')
             }
         }
     })
-
 
 async function getHashPW(username, pw, callback) {
     const result = await User.findAll({
