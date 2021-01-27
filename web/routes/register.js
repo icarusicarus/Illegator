@@ -7,13 +7,13 @@ var path = require('path');
 
 /*
 var registerPage = function (req, res, alert) {
-    res.render('register.ejs', {
+    res.render('register.html', {
         msg: alert
     })
 }
 
 var loginPage = function (req, res, alert) {
-    res.render('login.ejs', {
+    res.render('login.html', {
         msg: alert
     })
 }
@@ -64,4 +64,20 @@ router.route('/')
         }
     })
 
-module.exports = router;
+router.route('/idcheck')
+    .post(async (req, res, next) => {
+        console.log("[POST] ID Check");
+        const idcheck = await User.findOne({
+            where: {
+                username: req.body.id
+            }
+        }, { raw: true });
+
+        if (idcheck != null) {
+            res.json({ duplicate: 1 });
+            console.log("ID Dup");
+        } else {
+            res.json({ duplicate: 0 });
+            console.log("ID OK");
+        }
+    })
