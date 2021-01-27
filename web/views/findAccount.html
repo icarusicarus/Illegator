@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <h1>Find ID/PW</h1>
+</head>
+
+<body>
+    <form action="/findAccount/findId" method="POST">
+        <div>
+            <h3>Find ID</h3>
+            <label>please input your email</label>
+            <input type="text" id="email" name="email">
+            <button type="submit">Find!</button>
+        </div>
+    </form>
+
+    <form action="/findAccount/findPw" method="POST">
+        <div>
+            <h3>Find PW</h3>
+            <p>We will send you new password via email if information is correct.</p>
+            <label>please input your email</label>
+            <input type="text" id="email" name="email">
+            <label>please input your ID</label>
+            <input type="text" id="id" name="id">
+            <button type="submit">Find!</button>
+        </div>
+    </form>
+</body>
+
+</html>

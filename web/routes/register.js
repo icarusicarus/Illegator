@@ -81,3 +81,6 @@ router.route('/idcheck')
             console.log("ID OK");
         }
     })
+
+module.exports = router;
+

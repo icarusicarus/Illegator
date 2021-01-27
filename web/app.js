@@ -13,7 +13,8 @@ const { sequelize } = require('./models');
 
 app.set("port", process.env.PORT || 3000);
 app.set("views", "./views");
-app.set("view engine", "ejs");
+app.engine('html', require('ejs').renderFile);
+app.set("view engine", "html");
 
 app.use(
   expressSession({
@@ -39,6 +40,7 @@ var adminRouter = require("./routes/admin");
 var loginRouter = require("./routes/login");
 var logoutRouter = require("./routes/logout");
 var registerRouter = require("./routes/register");
+var findAccountRouter = require("./routes/findAccount");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -51,6 +53,7 @@ app.use("/admin", adminRouter);
 app.use("/main", mainRouter);
 app.use("/logout", logoutRouter);
 app.use("/register", registerRouter);
+app.use("/findAccount", findAccountRouter);
 
 app.use(function (req, res, next) {
   res.status(400).send("Not Found");
